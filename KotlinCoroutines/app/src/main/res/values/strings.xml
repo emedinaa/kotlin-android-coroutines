@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KotlinCoroutines</string>
+    <string name="modality"><![CDATA[Presencial & Online_presencial]]></string>
+    <string name="desc"><![CDATA[En este curso aprenderás a desarrollar aplicaciones Kotlin ademas de aprender el lenguaje de programación, teniendo como objetivo lograr conocer desde conceptos de programación con el lenguaje Kotlin (Lenguaje oficial para Android definido por google) y el flujo de desarrollo de aplicaciones móviles, en este curso se enfoca sobre todo en el conocimiento del desarrollo del App en forma local. Iniciamos con el conocimiento de los UIs básicos y luego los avanzados, también persistencia de datos y mapas de Google con Localización. Con estos conocimientos el Desarrollador va poder crear aplicaciones Móviles Android, a la altura de las mejores aplicaciones del Google Play. ]]></string>
+</resources>
