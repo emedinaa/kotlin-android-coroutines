@@ -5,9 +5,9 @@ import com.emedinaa.kotlincoroutines.Review
 
 interface DataSource {
 
-    suspend fun fetchCourses():List<Course>
+    fun fetchCourses():List<Course>
 
-    suspend fun fetchCourseByName(name:String):List<Course>
+    fun fetchCourseByName(name:String):List<Course>
 
-    suspend fun fetchReviews():List<Review>
+    fun fetchReviews():List<Review>
 }

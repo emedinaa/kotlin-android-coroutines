@@ -3,9 +3,12 @@ package com.emedinaa.kotlincoroutines
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.emedinaa.kotlincoroutines.data.RemoteDataSource
 import com.emedinaa.kotlincoroutines.data.Repository
+import com.emedinaa.kotlincoroutines.executor.AppExecutors
+import com.emedinaa.kotlincoroutines.executor.KAppExecutors
 
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,8 +26,13 @@ class MainActivity : AppCompatActivity() {
             goToCourse(it)
         }
     }
+
     private val repository:Repository by  lazy {
         Repository(RemoteDataSource())
+    }
+
+    private val appExecutor:KAppExecutors by lazy {
+        KAppExecutors()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         recyclerView.adapter = adapter
 
+        //fetchCoursesSync()
         fetchCourses()
         //fetchData()
     }
@@ -45,37 +54,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData(){
-        lifecycleScope.launch {
-            val courseDeferred = async (Dispatchers.IO){
-                repository.fetchCourses()
-            }
-            val reviewDeferred = async(Dispatchers.IO){
-                repository.fetchReviews()
-            }
+        appExecutor.networkIO.execute {
+            printThread()
+            val courseResult = repository.fetchCourses()
+            val reviewResult = repository.fetchReviews()
 
-            val courseResult = courseDeferred.await()
-            val reviewResult = reviewDeferred.await()
-
-            adapter.update(courseResult)
-            reviewList = reviewResult
+            appExecutor.mainThread.execute{
+                printThread()
+                adapter.update(courseResult)
+                reviewList = reviewResult
+            }
         }
+    }
+
+    private fun fetchCoursesSync(){
+        printThread()
+        val courseResult = repository.fetchCourses()
+        printThread()
+        adapter.update(courseResult)
     }
 
     private fun fetchCourses(){
-        lifecycleScope.launch {
-            val result = withContext(Dispatchers.IO){
-                repository.fetchCourses()
+        appExecutor.networkIO.execute {
+            printThread()
+            val  result = repository.fetchCourses()
+            appExecutor.mainThread.execute {
+                printThread()
+                adapter.update(result)
             }
-            adapter.update(result)
         }
     }
 
-    private fun fetchReviews(){
-        lifecycleScope.launch {
-            val result = withContext(Dispatchers.IO){
-                repository.fetchCourses()
-            }
-            adapter.update(result)
-        }
+    private fun printThread(){
+        Log.v("CONSOLE", "thread ${Thread.currentThread().id} ${ Thread.currentThread().name }")
     }
 }
