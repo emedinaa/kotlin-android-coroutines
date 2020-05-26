@@ -25,7 +25,6 @@ class CourseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         recyclerView.adapter = adapter
 
         populate()
@@ -52,8 +51,4 @@ class CourseActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
 }
