@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_course.view.*
 
-class CourseAdapter(private var courses:List<Course>):RecyclerView.Adapter<CourseAdapter.CourseViewHolder>(){
+class MainAdapter(private var courses:List<Course>, val itemAction:(item:Course)->Unit):RecyclerView.Adapter<MainAdapter.CourseViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): CourseViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -35,6 +35,9 @@ class CourseAdapter(private var courses:List<Course>):RecyclerView.Adapter<Cours
             view.textViewDate.text = "Fecha de inicio: ".plus(entity.date)
             view.textViewDesc.text = entity.desc
             Glide.with(view.imageView.context).load(entity.photo).into(view.imageView)
+            view.setOnClickListener {
+                itemAction(entity)
+            }
         }
     }
 }
