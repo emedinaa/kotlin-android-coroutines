@@ -16,6 +16,8 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
+    private var reviewList:List<Review> = emptyList()
+
     private val adapter:MainAdapter by lazy {
         MainAdapter(emptyList()){
             goToCourse(it)
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             val reviewResult = reviewDeferred.await()
 
             adapter.update(courseResult)
+            reviewList = reviewResult
         }
     }
 
