@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.emedinaa.kotlincoroutines.model.Course
 import kotlinx.android.synthetic.main.row_course.view.*
 
-class MainAdapter(private var courses:List<Course>, val itemAction:(item:Course)->Unit):RecyclerView.Adapter<MainAdapter.CourseViewHolder>(){
+class MainAdapter(private var courses:List<Course>, val itemAction:(item: Course)->Unit):RecyclerView.Adapter<MainAdapter.CourseViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): CourseViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -29,7 +30,7 @@ class MainAdapter(private var courses:List<Course>, val itemAction:(item:Course)
     }
 
     inner class CourseViewHolder(private val view: View) : RecyclerView.ViewHolder(view){
-        fun bind(entity:Course){
+        fun bind(entity: Course){
             view.textViewName.text = entity.title
             view.textViewModality.text = entity.modality
             view.textViewDate.text = "Fecha de inicio: ".plus(entity.date)

@@ -1,4 +1,4 @@
-package com.emedinaa.kotlincoroutines
+package com.emedinaa.kotlincoroutines.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

@@ -1,7 +1,7 @@
 package com.emedinaa.kotlincoroutines.data.http
 
-import com.emedinaa.kotlincoroutines.Course
-import com.emedinaa.kotlincoroutines.Review
+import com.emedinaa.kotlincoroutines.model.Course
+import com.emedinaa.kotlincoroutines.model.Review
 import com.emedinaa.kotlincoroutines.data.CourseResponse
 import com.emedinaa.kotlincoroutines.data.ReviewResponse
 import com.google.gson.GsonBuilder

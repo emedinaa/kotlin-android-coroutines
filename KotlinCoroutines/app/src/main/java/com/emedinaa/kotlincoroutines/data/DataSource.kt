@@ -1,7 +1,7 @@
 package com.emedinaa.kotlincoroutines.data
 
-import com.emedinaa.kotlincoroutines.Course
-import com.emedinaa.kotlincoroutines.Review
+import com.emedinaa.kotlincoroutines.model.Course
+import com.emedinaa.kotlincoroutines.model.Review
 
 interface DataSource {
 
