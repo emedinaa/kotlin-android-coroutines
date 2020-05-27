@@ -50,5 +50,4 @@ class CourseActivity : AppCompatActivity() {
             adapter.update(result)
         }
     }
-
 }

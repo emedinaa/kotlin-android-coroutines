@@ -6,8 +6,6 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.emedinaa.kotlincoroutines.data.RemoteDataSource
 import com.emedinaa.kotlincoroutines.data.Repository
-
-
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -44,23 +42,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun fetchData(){
-        lifecycleScope.launch {
-            val courseDeferred = async (Dispatchers.IO){
-                repository.fetchCourses()
-            }
-            val reviewDeferred = async(Dispatchers.IO){
-                repository.fetchReviews()
-            }
-
-            val courseResult = courseDeferred.await()
-            val reviewResult = reviewDeferred.await()
-
-            adapter.update(courseResult)
-            reviewList = reviewResult
-        }
-    }
-
     private fun fetchCourses(){
         lifecycleScope.launch {
             val result = withContext(Dispatchers.IO){
@@ -78,4 +59,22 @@ class MainActivity : AppCompatActivity() {
             adapter.update(result)
         }
     }
+
+    private fun fetchData(){
+        lifecycleScope.launch {
+            val courseDeferred = async(Dispatchers.IO){
+                repository.fetchCourses()
+            }
+            val reviewDeferred = async(Dispatchers.IO){
+                repository.fetchReviews()
+            }
+
+            val courseResult = courseDeferred.await()
+            val reviewResult = reviewDeferred.await()
+
+            adapter.update(courseResult)
+            reviewList = reviewResult
+        }
+    }
+
 }
