@@ -4,18 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import com.emedinaa.kotlincoroutines.data.RemoteDataSource
 import com.emedinaa.kotlincoroutines.data.Repository
-import com.emedinaa.kotlincoroutines.executor.AppExecutors
 import com.emedinaa.kotlincoroutines.executor.KAppExecutors
-
-
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,20 +45,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun fetchData(){
-        appExecutor.networkIO.execute {
-            printThread()
-            val courseResult = repository.fetchCourses()
-            val reviewResult = repository.fetchReviews()
-
-            appExecutor.mainThread.execute{
-                printThread()
-                adapter.update(courseResult)
-                reviewList = reviewResult
-            }
-        }
-    }
-
     private fun fetchCoursesSync(){
         printThread()
         val courseResult = repository.fetchCourses()
@@ -81,6 +59,20 @@ class MainActivity : AppCompatActivity() {
             appExecutor.mainThread.execute {
                 printThread()
                 adapter.update(result)
+            }
+        }
+    }
+
+    private fun fetchData(){
+        appExecutor.networkIO.execute {
+            printThread()
+            val courseResult = repository.fetchCourses()
+            val reviewResult = repository.fetchReviews()
+
+            appExecutor.mainThread.execute{
+                printThread()
+                adapter.update(courseResult)
+                reviewList = reviewResult
             }
         }
     }

@@ -2,16 +2,12 @@ package com.emedinaa.kotlincoroutines
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.emedinaa.kotlincoroutines.data.RemoteDataSource
 import com.emedinaa.kotlincoroutines.data.Repository
 import com.emedinaa.kotlincoroutines.executor.KAppExecutors
 import kotlinx.android.synthetic.main.activity_course.*
 import kotlinx.android.synthetic.main.layout_content.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class CourseActivity : AppCompatActivity() {
 
@@ -49,7 +45,6 @@ class CourseActivity : AppCompatActivity() {
     }
 
     private fun fetchReviews(){
-
         appExecutor.networkIO.execute {
             val result = repository.fetchReviews()
             appExecutor.mainThread.execute {
