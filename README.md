@@ -3,7 +3,6 @@ Coroutines on Android
 
 Slides can be found here: https://docs.google.com/presentation/d/1AgtXx4j6kmOJCQjL_3JLndKMC3lXE0EiccYMhZtNbYM/edit?usp=sharing
 
-
 ## References 
 
 - Background tasks https://developer.android.com/training/multiple-threads
