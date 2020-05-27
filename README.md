@@ -14,7 +14,7 @@ Slides can be found here: https://docs.google.com/presentation/d/1AgtXx4j6kmOJCQ
 
 - Coroutines on Android https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb
 
-- Architecture componentes / LiveData https://developer.android.com/topic/libraries/architecture/livedata
+- Architecture components / LiveData https://developer.android.com/topic/libraries/architecture/livedata
 
 - Architecture components / ViewModel https://developer.android.com/topic/libraries/architecture/viewmodel
 
