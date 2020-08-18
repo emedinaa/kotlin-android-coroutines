@@ -18,3 +18,9 @@ Slides can be found here: https://docs.google.com/presentation/d/1AgtXx4j6kmOJCQ
 - Architecture components / ViewModel https://developer.android.com/topic/libraries/architecture/viewmodel
 
 - Guide to app architecture https://developer.android.com/jetpack/docs/guide
+
+## Contributing and reporting issues
+
+If you want to contribute in this repository, please send me a pull request or if you want to  report some issues please send  at  https://github.com/emedinaa/kotlin-android-coroutines/issues
+
+I appreciate any question or comment. Also, if you consider it useful, you can give me a star ⭐ ⭐ ⭐.
