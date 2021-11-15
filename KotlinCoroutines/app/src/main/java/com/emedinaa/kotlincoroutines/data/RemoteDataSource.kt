@@ -4,17 +4,20 @@ import com.emedinaa.kotlincoroutines.Course
 import com.emedinaa.kotlincoroutines.Review
 import com.emedinaa.kotlincoroutines.data.http.ApiClient
 
-class RemoteDataSource:DataSource {
+/**
+ * @author Eduardo Medina
+ */
+class RemoteDataSource : DataSource {
 
     override suspend fun fetchCourses(): List<Course> {
-        return  ApiClient.getCourses()
+        return ApiClient.getCourses()
     }
 
     override suspend fun fetchCourseByName(name: String): List<Course> {
-        return  ApiClient.getCourses()
+        return ApiClient.getCourses()
     }
 
     override suspend fun fetchReviews(): List<Review> {
-        return  ApiClient.getReviews()
+        return ApiClient.getReviews()
     }
 }

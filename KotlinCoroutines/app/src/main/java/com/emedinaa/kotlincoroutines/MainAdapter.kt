@@ -3,11 +3,16 @@ package com.emedinaa.kotlincoroutines
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.row_course.view.*
 
-class MainAdapter(private var courses:List<Course>, val itemAction:(item:Course)->Unit):RecyclerView.Adapter<MainAdapter.CourseViewHolder>(){
+/**
+ * @author Eduardo Medina
+ */
+class MainAdapter(private var courses: List<Course>, val itemAction: (item: Course) -> Unit) :
+    RecyclerView.Adapter<MainAdapter.CourseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): CourseViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -19,22 +24,26 @@ class MainAdapter(private var courses:List<Course>, val itemAction:(item:Course)
         vh.bind(courses[position])
     }
 
-    override fun getItemCount(): Int {
-        return courses.size
-    }
+    override fun getItemCount(): Int = courses.size
 
-    fun update(data:List<Course>){
-        courses= data
+    fun update(data: List<Course>) {
+        courses = data
         notifyDataSetChanged()
     }
 
-    inner class CourseViewHolder(private val view: View) : RecyclerView.ViewHolder(view){
-        fun bind(entity:Course){
-            view.textViewName.text = entity.title
-            view.textViewModality.text = entity.modality
-            view.textViewDate.text = "Fecha de inicio: ".plus(entity.date)
-            view.textViewDesc.text = entity.desc
-            Glide.with(view.imageView.context).load(entity.photo).into(view.imageView)
+    inner class CourseViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        private val textViewName: TextView = view.findViewById(R.id.textViewName)
+        private val textViewModality: TextView = view.findViewById(R.id.textViewModality)
+        private val textViewDate: TextView = view.findViewById(R.id.textViewDate)
+        private val textViewDesc: TextView = view.findViewById(R.id.textViewDesc)
+        private val imageView: ImageView = view.findViewById(R.id.imageView)
+
+        fun bind(entity: Course) {
+            textViewName.text = entity.title
+            textViewModality.text = entity.modality
+            textViewDate.text = "Fecha de inicio: ".plus(entity.date)
+            textViewDesc.text = entity.desc
+            Glide.with(imageView.context).load(entity.photo).into(imageView)
             view.setOnClickListener {
                 itemAction(entity)
             }
