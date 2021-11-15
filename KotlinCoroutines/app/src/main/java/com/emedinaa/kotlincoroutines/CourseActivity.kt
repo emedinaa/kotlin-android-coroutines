@@ -1,21 +1,25 @@
 package com.emedinaa.kotlincoroutines
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.emedinaa.kotlincoroutines.data.RemoteDataSource
 import com.emedinaa.kotlincoroutines.data.Repository
+import com.emedinaa.kotlincoroutines.databinding.ActivityCourseBinding
 import com.emedinaa.kotlincoroutines.executor.KAppExecutors
-import kotlinx.android.synthetic.main.activity_course.*
-import kotlinx.android.synthetic.main.layout_content.*
 
+/**
+ * @author Eduardo Medina
+ */
 class CourseActivity : AppCompatActivity() {
 
-    private val adapter:ReviewAdapter by lazy {
+    private lateinit var binding: ActivityCourseBinding
+
+    private val adapter: ReviewAdapter by lazy {
         ReviewAdapter(emptyList())
     }
 
-    private val repository: Repository by  lazy {
+    private val repository: Repository by lazy {
         Repository(RemoteDataSource())
     }
 
@@ -26,25 +30,26 @@ class CourseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_course)
-        recyclerView.adapter = adapter
+        binding = ActivityCourseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.content.recyclerView.adapter = adapter
 
         populate()
         fetchReviews()
     }
 
-    private fun populate(){
+    private fun populate() {
         intent?.extras?.getParcelable<Course>("COURSE")?.let {
-            collapToolbarLayout.title = it.nickname
-            textViewName.text = it.title
-            textViewModality.text = it.modality
-            textViewDate.text = "Fecha de inicio: ".plus(it.date)
-            textViewDesc.text = it.desc
-            Glide.with(this).load(it.photo).into(imageView)
+            binding.collapToolbarLayout.title = it.nickname
+            binding.content.textViewName.text = it.title
+            binding.content.textViewModality.text = it.modality
+            binding.content.textViewDate.text = "Fecha de inicio: ".plus(it.date)
+            binding.content.textViewDesc.text = it.desc
+            Glide.with(binding.imageView.context).load(it.photo).into(binding.imageView)
         }
     }
 
-    private fun fetchReviews(){
+    private fun fetchReviews() {
         appExecutor.networkIO.execute {
             val result = repository.fetchReviews()
             appExecutor.mainThread.execute {
