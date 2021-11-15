@@ -1,49 +1,51 @@
 package com.emedinaa.kotlincoroutines
 
+
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.emedinaa.kotlincoroutines.data.RemoteDataSource
 import com.emedinaa.kotlincoroutines.data.Repository
+import com.emedinaa.kotlincoroutines.databinding.ActivityMainBinding
 import com.emedinaa.kotlincoroutines.model.Course
 import com.emedinaa.kotlincoroutines.viewmodel.MainViewModel
 import com.emedinaa.kotlincoroutines.viewmodel.ViewModelFactory
-
-
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * @author Eduardo Medina
+ */
 class MainActivity : AppCompatActivity() {
 
-    private val adapter:MainAdapter by lazy {
-        MainAdapter(emptyList()){
+    private lateinit var binding: ActivityMainBinding
+
+    private val adapter: MainAdapter by lazy {
+        MainAdapter(emptyList()) {
             goToCourse(it)
         }
     }
 
-    private val repository:Repository by  lazy {
+    private val repository: Repository by lazy {
         Repository(RemoteDataSource())
     }
 
-    private lateinit var mainViewModel:MainViewModel
+    private val mainViewModel by viewModels<MainViewModel> {
+        ViewModelFactory(repository)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //view model
-        mainViewModel = ViewModelProvider(this,ViewModelFactory(repository)).get(MainViewModel::class.java)
-
-        //ui
-        recyclerView.adapter = adapter
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupUi()
 
         //observers
-        mainViewModel.courses.observe(this, Observer {itList ->
+        mainViewModel.courses.observe(this, { itList ->
             itList?.let {
                 adapter.update(it)
             }
@@ -53,21 +55,25 @@ class MainActivity : AppCompatActivity() {
         //fetchCourses()
     }
 
-    private fun goToCourse(course: Course){
-        val intent = Intent(this,CourseActivity::class.java)
+    private fun setupUi() {
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun goToCourse(course: Course) {
+        val intent = Intent(this, CourseActivity::class.java)
         intent.putExtras(Bundle().apply {
-            putParcelable("COURSE",course)
+            putParcelable("COURSE", course)
         })
         startActivity(intent)
     }
 
-    private fun fetchCoursesVM(){
+    private fun fetchCoursesVM() {
         mainViewModel.fetchCourses()
     }
 
-    private fun fetchCourses(){
+    private fun fetchCourses() {
         lifecycleScope.launch {
-            val result = withContext(Dispatchers.IO){
+            val result = withContext(Dispatchers.IO) {
                 repository.fetchCourses()
             }
             adapter.update(result)

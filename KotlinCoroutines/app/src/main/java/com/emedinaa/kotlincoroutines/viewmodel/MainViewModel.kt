@@ -10,7 +10,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(private val repository:Repository):ViewModel() {
+/**
+ * @author Eduardo Medina
+ */
+class MainViewModel(private val repository: Repository) : ViewModel() {
 
     private val _courses = MutableLiveData<List<Course>>().apply { value = emptyList() }
     val courses: LiveData<List<Course>> = _courses
@@ -19,9 +22,9 @@ class MainViewModel(private val repository:Repository):ViewModel() {
         fetchCourses()
     }
 
-    fun fetchCourses(){
+    fun fetchCourses() {
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO){
+            val result = withContext(Dispatchers.IO) {
                 repository.fetchCourses()
             }
             _courses.value = result
