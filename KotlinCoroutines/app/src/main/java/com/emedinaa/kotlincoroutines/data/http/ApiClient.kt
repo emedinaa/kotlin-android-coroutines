@@ -13,7 +13,7 @@ import okhttp3.Request
  */
 object ApiClient {
 
-    private const val URL = "https://obscure-earth-55790.herokuapp.com"
+    private const val URL = "https://emedinaa.azurewebsites.net"
     private val httpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor(LoggingInterceptor())

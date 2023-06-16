@@ -108,4 +108,5 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 KotlinCoroutines/.idea/
+.DS_Store
 

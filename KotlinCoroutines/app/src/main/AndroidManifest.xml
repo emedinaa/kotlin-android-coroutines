@@ -12,8 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CourseActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".CourseActivity"
+          android:exported="true"></activity>
+        <activity android:name=".MainActivity"
+          android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
